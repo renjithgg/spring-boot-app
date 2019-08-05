@@ -56,11 +56,13 @@ public class demoController {
     public String streamUsingFileLine() throws IOException {
         try {
             Resource resource = new ClassPathResource("static/questions.txt");
-            Path path = Paths.get(String.valueOf(resource.getFile()));
+            // Path path = Paths.get(String.valueOf(resource.getFile()));
+
+            String path = Paths.get(resource.getFile().getPath()).toAbsolutePath().toString();
 
             StringBuilder resultStringBuilder = new StringBuilder();
 
-            Stream<String> lines = Files.lines(path);
+            Stream<String> lines = Files.lines(Paths.get(path));
             lines.forEach(line -> {
                 resultStringBuilder.append(line).append("\n");
             });
@@ -75,7 +77,7 @@ public class demoController {
     public String streamUsingBufferedReader() throws IOException {
         try {
             Resource resource = new ClassPathResource("static/questions.txt");
-            Path path = Paths.get(String.valueOf(resource.getFile()));
+            Path path = Paths.get(String.valueOf(resource.getFile().getPath()));
 
             StringBuilder resultStringBuilder = new StringBuilder();
 
