@@ -54,11 +54,11 @@ public class demoController {
 
     @GetMapping(value = "/read-file-stream-file-line")
     public String streamUsingFileLine() throws IOException {
-        try {
+        //try {
             Resource resource = new ClassPathResource("static/questions.txt");
             // Path path = Paths.get(String.valueOf(resource.getFile()));
 
-            String path = Paths.get(resource.getFile().getPath()).toAbsolutePath().toString();
+            String path = Paths.get(String.valueOf(resource.getFile())).toAbsolutePath().toString();
 
             StringBuilder resultStringBuilder = new StringBuilder();
 
@@ -68,16 +68,18 @@ public class demoController {
             });
             lines.close();
             return resultStringBuilder.toString();
+            /*
         } catch(IOException io) {
             return "Error reading file";
         }
+             */
     }
 
     @GetMapping(value = "/read-file-stream-buffer-reader")
     public String streamUsingBufferedReader() throws IOException {
-        try {
+        // try {
             Resource resource = new ClassPathResource("static/questions.txt");
-            Path path = Paths.get(String.valueOf(resource.getFile().getPath()));
+            Path path = Paths.get(String.valueOf(resource.getFile()));
 
             StringBuilder resultStringBuilder = new StringBuilder();
 
@@ -90,9 +92,11 @@ public class demoController {
             lines.close();
 
             return resultStringBuilder.toString();
+            /*
         } catch(IOException io) {
             return "Error reading file";
         }
+             */
     }
 
     @GetMapping(value="/add-detail") // Map ONLY GET Requests
