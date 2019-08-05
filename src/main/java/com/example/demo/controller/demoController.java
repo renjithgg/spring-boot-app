@@ -60,7 +60,7 @@ public class demoController {
 
             // String path = Paths.get(String.valueOf(resource.getFile())).toAbsolutePath().toString();
 
-            Path path = Paths.get(String.valueOf(resource.getFile().getAbsolutePath()));
+            Path path = Paths.get(String.valueOf(resource.getFile().getAbsoluteFile()));
 
             StringBuilder resultStringBuilder = new StringBuilder();
 
@@ -81,7 +81,7 @@ public class demoController {
     public String streamUsingBufferedReader() throws IOException {
         // try {
             Resource resource = new ClassPathResource("static/questions.txt");
-            Path path = Paths.get(String.valueOf(resource.getFile()));
+            Path path = Paths.get(String.valueOf(resource.getFile().getAbsoluteFile()));
 
             StringBuilder resultStringBuilder = new StringBuilder();
 
