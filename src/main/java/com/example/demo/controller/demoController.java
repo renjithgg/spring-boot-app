@@ -14,6 +14,10 @@ import org.springframework.web.bind.annotation.RestController;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.stream.Stream;
 
 @RestController
 
@@ -34,7 +38,7 @@ public class demoController {
         return "Its test by Renjith";
     }
 
-    @GetMapping(value = "/read-question")
+    @GetMapping(value = "/read-file-old-java")
     public String readQuestion() throws IOException {
         Resource resource = new ClassPathResource("static/questions.txt");
         StringBuilder resultStringBuilder = new StringBuilder();
@@ -45,6 +49,40 @@ public class demoController {
                 resultStringBuilder.append(line).append("\n");
             }
         }
+        return resultStringBuilder.toString();
+    }
+
+    @GetMapping(value = "/read-file-stream-file-line")
+    public String streamUsingFileLine() throws IOException {
+        Resource resource = new ClassPathResource("static/questions.txt");
+        Path path = Paths.get(String.valueOf(resource.getFile()));
+
+        StringBuilder resultStringBuilder = new StringBuilder();
+
+        Stream<String> lines = Files.lines(path);
+        lines.forEach(line->{
+            resultStringBuilder.append(line).append("\n");
+        });
+        lines.close();
+
+        return resultStringBuilder.toString();
+    }
+
+    @GetMapping(value = "/read-file-stream-buffer-reader")
+    public String streamUsingBufferedReader() throws IOException {
+        Resource resource = new ClassPathResource("static/questions.txt");
+        Path path = Paths.get(String.valueOf(resource.getFile()));
+
+        StringBuilder resultStringBuilder = new StringBuilder();
+
+        BufferedReader br = Files.newBufferedReader(path);
+
+        Stream <String> lines = br.lines();
+        lines.forEach(line->{
+            resultStringBuilder.append(line).append("\n");
+        });
+        lines.close();
+
         return resultStringBuilder.toString();
     }
 
