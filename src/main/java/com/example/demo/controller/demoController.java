@@ -54,36 +54,43 @@ public class demoController {
 
     @GetMapping(value = "/read-file-stream-file-line")
     public String streamUsingFileLine() throws IOException {
-        Resource resource = new ClassPathResource("static/questions.txt");
-        Path path = Paths.get(String.valueOf(resource.getFile()));
+        try {
+            Resource resource = new ClassPathResource("static/questions.txt");
+            Path path = Paths.get(String.valueOf(resource.getFile()));
 
-        StringBuilder resultStringBuilder = new StringBuilder();
+            StringBuilder resultStringBuilder = new StringBuilder();
 
-        Stream<String> lines = Files.lines(path);
-        lines.forEach(line->{
-            resultStringBuilder.append(line).append("\n");
-        });
-        lines.close();
-
-        return resultStringBuilder.toString();
+            Stream<String> lines = Files.lines(path);
+            lines.forEach(line -> {
+                resultStringBuilder.append(line).append("\n");
+            });
+            lines.close();
+            return resultStringBuilder.toString();
+        } catch(IOException io) {
+            return "Error reading file";
+        }
     }
 
     @GetMapping(value = "/read-file-stream-buffer-reader")
     public String streamUsingBufferedReader() throws IOException {
-        Resource resource = new ClassPathResource("static/questions.txt");
-        Path path = Paths.get(String.valueOf(resource.getFile()));
+        try {
+            Resource resource = new ClassPathResource("static/questions.txt");
+            Path path = Paths.get(String.valueOf(resource.getFile()));
 
-        StringBuilder resultStringBuilder = new StringBuilder();
+            StringBuilder resultStringBuilder = new StringBuilder();
 
-        BufferedReader br = Files.newBufferedReader(path);
+            BufferedReader br = Files.newBufferedReader(path);
 
-        Stream <String> lines = br.lines();
-        lines.forEach(line->{
-            resultStringBuilder.append(line).append("\n");
-        });
-        lines.close();
+            Stream<String> lines = br.lines();
+            lines.forEach(line -> {
+                resultStringBuilder.append(line).append("\n");
+            });
+            lines.close();
 
-        return resultStringBuilder.toString();
+            return resultStringBuilder.toString();
+        } catch(IOException io) {
+            return "Error reading file";
+        }
     }
 
     @GetMapping(value="/add-detail") // Map ONLY GET Requests
