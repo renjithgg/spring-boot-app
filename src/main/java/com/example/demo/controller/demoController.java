@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.file.Files;
@@ -57,8 +56,10 @@ public class demoController {
     public String streamUsingFileLine() throws IOException {
         Resource resource = new ClassPathResource("static/questions.txt");
         Path path = Paths.get(String.valueOf(resource.getFile()));
-        File file = new File(String.valueOf(path));
-        String absolutePath = file.getAbsolutePath();
+
+        String absolutePath = path.toFile().getAbsolutePath();
+
+        System.out.println(absolutePath);
 
         StringBuilder resultStringBuilder = new StringBuilder();
 
@@ -68,7 +69,7 @@ public class demoController {
         });
         lines.close();
 
-        return resultStringBuilder.toString();
+        return absolutePath;
     }
 
     @GetMapping(value = "/read-file-stream-buffer-reader")
