@@ -58,11 +58,13 @@ public class demoController {
             Resource resource = new ClassPathResource("static/questions.txt");
             // Path path = Paths.get(String.valueOf(resource.getFile()));
 
-            String path = Paths.get(String.valueOf(resource.getFile())).toAbsolutePath().toString();
+            // String path = Paths.get(String.valueOf(resource.getFile())).toAbsolutePath().toString();
+
+            Path path = Paths.get(String.valueOf(resource.getFile().getAbsolutePath()));
 
             StringBuilder resultStringBuilder = new StringBuilder();
 
-            Stream<String> lines = Files.lines(Paths.get(path));
+            Stream<String> lines = Files.lines(path);
             lines.forEach(line -> {
                 resultStringBuilder.append(line).append("\n");
             });
