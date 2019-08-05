@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.file.Files;
@@ -54,51 +55,38 @@ public class demoController {
 
     @GetMapping(value = "/read-file-stream-file-line")
     public String streamUsingFileLine() throws IOException {
-        //try {
-            Resource resource = new ClassPathResource("/static/questions.txt");
-            // Path path = Paths.get(String.valueOf(resource.getFile()));
+        Resource resource = new ClassPathResource("static/questions.txt");
+        Path path = Paths.get(String.valueOf(resource.getFile()));
+        File file = new File(String.valueOf(path));
+        String absolutePath = file.getAbsolutePath();
 
-            // String path = Paths.get(String.valueOf(resource.getFile())).toAbsolutePath().toString();
+        StringBuilder resultStringBuilder = new StringBuilder();
 
-            Path path = Paths.get(resource.getFile().getAbsolutePath());
+        Stream<String> lines = Files.lines(Paths.get(absolutePath));
+        lines.forEach(line->{
+            resultStringBuilder.append(line).append("\n");
+        });
+        lines.close();
 
-            StringBuilder resultStringBuilder = new StringBuilder();
-
-            Stream<String> lines = Files.lines(path);
-            lines.forEach(line -> {
-                resultStringBuilder.append(line).append("\n");
-            });
-            lines.close();
-            return resultStringBuilder.toString();
-            /*
-        } catch(IOException io) {
-            return "Error reading file";
-        }
-             */
+        return resultStringBuilder.toString();
     }
 
     @GetMapping(value = "/read-file-stream-buffer-reader")
     public String streamUsingBufferedReader() throws IOException {
-        // try {
-            Resource resource = new ClassPathResource("static/questions.txt");
-            Path path = Paths.get(String.valueOf(resource.getFile().getAbsoluteFile()));
+        Resource resource = new ClassPathResource("static/questions.txt");
+        Path path = Paths.get(String.valueOf(resource.getFile()));
 
-            StringBuilder resultStringBuilder = new StringBuilder();
+        StringBuilder resultStringBuilder = new StringBuilder();
 
-            BufferedReader br = Files.newBufferedReader(path);
+        BufferedReader br = Files.newBufferedReader(path);
 
-            Stream<String> lines = br.lines();
-            lines.forEach(line -> {
-                resultStringBuilder.append(line).append("\n");
-            });
-            lines.close();
+        Stream <String> lines = br.lines();
+        lines.forEach(line->{
+            resultStringBuilder.append(line).append("\n");
+        });
+        lines.close();
 
-            return resultStringBuilder.toString();
-            /*
-        } catch(IOException io) {
-            return "Error reading file";
-        }
-             */
+        return resultStringBuilder.toString();
     }
 
     @GetMapping(value="/add-detail") // Map ONLY GET Requests
