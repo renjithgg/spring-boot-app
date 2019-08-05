@@ -60,7 +60,7 @@ public class demoController {
 
             // String path = Paths.get(String.valueOf(resource.getFile())).toAbsolutePath().toString();
 
-            Path path = Paths.get(String.valueOf(resource.getFile()));
+            Path path = Paths.get(resource.getFile().getAbsolutePath());
 
             StringBuilder resultStringBuilder = new StringBuilder();
 
