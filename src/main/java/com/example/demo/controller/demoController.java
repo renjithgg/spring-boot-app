@@ -57,19 +57,15 @@ public class demoController {
         Resource resource = new ClassPathResource("static/questions.txt");
         Path path = Paths.get(String.valueOf(resource.getFile()));
 
-        String absolutePath = path.toFile().getAbsolutePath();
-
-        System.out.println(absolutePath);
-
         StringBuilder resultStringBuilder = new StringBuilder();
 
-        Stream<String> lines = Files.lines(Paths.get(absolutePath));
+        Stream<String> lines = Files.lines(path);
         lines.forEach(line->{
             resultStringBuilder.append(line).append("\n");
         });
         lines.close();
 
-        return absolutePath;
+        return resultStringBuilder.toString();
     }
 
     @GetMapping(value = "/read-file-stream-buffer-reader")
