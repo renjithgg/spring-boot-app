@@ -55,12 +55,12 @@ public class demoController {
     @GetMapping(value = "/read-file-stream-file-line")
     public String streamUsingFileLine() throws IOException {
         //try {
-            Resource resource = new ClassPathResource("static/questions.txt");
+            Resource resource = new ClassPathResource("/static/questions.txt");
             // Path path = Paths.get(String.valueOf(resource.getFile()));
 
             // String path = Paths.get(String.valueOf(resource.getFile())).toAbsolutePath().toString();
 
-            Path path = Paths.get(String.valueOf(resource.getFile().getAbsoluteFile()));
+            Path path = Paths.get(String.valueOf(resource.getFile()));
 
             StringBuilder resultStringBuilder = new StringBuilder();
 
