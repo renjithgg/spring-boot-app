@@ -2,6 +2,8 @@ package com.example.demo.dao;
 
 import com.example.demo.model.Products;
 import com.example.demo.util.ReadJson;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -21,7 +23,8 @@ public class ProductsDao {
 		ReadJson read = new ReadJson();
 		String fileName = "static/Products.json";
 		ClassLoader classLoader = new ProductsDao().getClass().getClassLoader();
-		File file = new File(classLoader.getResource(fileName).getFile());
+		Resource resource = new ClassPathResource(fileName);
+		File file = new File(String.valueOf(resource.getFile()));
 		return read.readjsonFile(file);
 	}
 
