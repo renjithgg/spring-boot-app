@@ -26,7 +26,7 @@ public class ProductsDao {
 					 = new BufferedReader(new InputStreamReader(resource.getInputStream()))) {
 			String line;
 			while ((line = br.readLine()) != null) {
-				resultStringBuilder.append(line).append("\n");
+				resultStringBuilder.append(line);
 			}
 		}
 		return read.readjsonFile(resultStringBuilder.toString());
