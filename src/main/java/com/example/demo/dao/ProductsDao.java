@@ -6,9 +6,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,10 +20,16 @@ public class ProductsDao {
 	public List<Products> getProductListing() throws FileNotFoundException, IOException {
 		ReadJson read = new ReadJson();
 		String fileName = "static/Products.json";
-		ClassLoader classLoader = new ProductsDao().getClass().getClassLoader();
+		StringBuilder resultStringBuilder = new StringBuilder();
 		Resource resource = new ClassPathResource(fileName);
-		File file = new File(String.valueOf(resource.getFile()));
-		return read.readjsonFile(file);
+		try (BufferedReader br
+					 = new BufferedReader(new InputStreamReader(resource.getInputStream()))) {
+			String line;
+			while ((line = br.readLine()) != null) {
+				resultStringBuilder.append(line).append("\n");
+			}
+		}
+		return read.readjsonFile(resultStringBuilder.toString());
 	}
 
 	public List<Products> getProducts(List<Products> products, Products productFilter){
